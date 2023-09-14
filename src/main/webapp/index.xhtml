@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body style="padding: 15px 20px">
+      <h:form style=" margin: 0 auto" id="form">
+        <h3 style="margin: 0">Анализируемая страница</h3>
+        <p:inputText style="width: 100%" id="input_link" />
+        <div style="text-align: center">
+            <p:commandButton style="width: 200px; margin: 20px 0" id="button" value="Анализировать"
+                             action="#{linkBean.getInputLink()}" update="table" />
+        </div>
+        <p:outputPanel style="height: 52vh" id="output">
+            <p:blockUI  block="output" trigger="button" widgetVar="waitingBox">
+            <div style="display: flex; flex-direction: row;gap: 20px;">
+                <div><p:graphicImage value="images/loading.gif" width="50"/></div>
+                <div><h:outputText value="Идет обработка..." /></div>
+            </div>
+            </p:blockUI>
+            <p:dataTable scrollable="true" scrollHeight="45vh" style="width: 100%" id="table" value="#{linkBean.ls}" var="item">
+                <p:column style="width: 50px" headerText="№">
+                    <h:outputText value="#{item.num}" />
+                </p:column>
+                <p:column headerText="Имя ссылки">
+                    <h:outputText value="#{item.text}" />
+                </p:column>
+                <p:column headerText="Адрес ссылки">
+                    <p:commandLink onclick="document.getElementById('form:input_link').value = this.textContent;" value="#{item.link}"/>
+                </p:column>
+            </p:dataTable>
+        </p:outputPanel>
+        <div style="text-align: center">
+            <p:commandButton style="width: 200px; margin-top: 20px" id="reset" value="Очистить"
+                             action="#{linkBean.resetTable}" update="table" />
+        </div>
+      </h:form>
+      <p:messages id="messages" showDetail="true" closable="true">
+        <p:autoUpdate/>
+      </p:messages>
+    </h:body>
+</html>
