@@ -19,8 +19,8 @@ public class LinkBean {
             showError(e.getMessage());
         }
     }
-    public void showError(String error_mess) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", error_mess));
+    public void showError(String errorMessage) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", errorMessage));
     }
     public List<ParsedLink> getLs() {
         return ls.getLinks();
